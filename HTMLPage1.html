@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Para vos 💙</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #1c325f, #050c20);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            padding: 20px;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        /* 🌄 Mini paisaje abajo */
+        .landscape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(to top, #23451f, #2f5e29);
+            box-shadow: 0 -6px 18px rgba(0,0,0,0.5);
+        }
+
+        .hill {
+            position: absolute;
+            bottom: 60px;
+            right: -40px;
+            width: 220px;
+            height: 80px;
+            background: #274c23;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        /* 🌳 Arbolito al costado izquierdo */
+        .side-tree {
+            position: absolute;
+            bottom: 70px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .side-tree-top {
+            width: 80px;
+            height: 70px;
+            background: #1a6b34;
+            border-radius: 50px 50px 40px 40px;
+            box-shadow: 0 0 16px rgba(0,0,0,0.5);
+            margin-bottom: -6px;
+        }
+
+        .side-tree-trunk {
+            width: 32px;
+            height: 70px;
+            background: #5a3a22;
+            border-radius: 10px;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .side-tree-trunk span {
+                color: #f5e0c3;
+                font-size: 10px;
+                font-weight: 600;
+                text-align: center;
+                line-height: 1.1;
+            }
+
+        /* ❤️ Corazones + 🍔 flotando */
+        .heart-floating {
+            position: fixed;
+            color: #ff7aa9;
+            font-size: 18px;
+            pointer-events: none;
+            animation: floatUp 7s linear infinite;
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh) scale(0.8);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-10vh) scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* Bloques Minecraft */
+        .minecraft-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 6px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .block {
+            width: 42px;
+            height: 42px;
+            background: #8a5a30;
+            border: 3px solid #5a381f;
+            border-radius: 3px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+            .block::after {
+                content: attr(data-letter);
+                position: absolute;
+                color: #fff;
+                font-weight: 900;
+                font-size: 20px;
+                inset: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-shadow: 2px 2px 0 #000;
+            }
+
+        .title {
+            color: #d3dcff;
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .subtitle {
+            color: #cdd7ff;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Botón canción */
+        .play-button {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+            background: #1f2f6a;
+            color: #e3e7ff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            z-index: 3;
+        }
+
+            .play-button:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+            }
+
+        /* Sobre y carta */
+        .envelope-wrapper {
+            position: relative;
+            width: 260px;
+            height: 190px;
+            margin: 0.3rem auto 0;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            background: #fff1f6;
+            border: 2px solid #fc7aa7;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+            .envelope:hover {
+                transform: translateY(-3px);
+            }
+
+            .envelope::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #ffb3c6;
+                transform-origin: bottom;
+                transition: 0.6s ease;
+            }
+
+            .envelope.open::before {
+                transform: rotateX(180deg);
+            }
+
+        .heart {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: #ff4b76;
+        }
+
+            .heart::before,
+            .heart::after {
+                content: "";
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                background: #ff4b76;
+                border-radius: 50%;
+            }
+
+            .heart::before {
+                top: -20px;
+                left: 0;
+            }
+
+            .heart::after {
+                left: -20px;
+                top: 0;
+            }
+
+        .letter {
+            position: absolute;
+            inset: 12px;
+            background: #fffdf9;
+            padding: 15px;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: 0.6s ease;
+            overflow-y: auto;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .letter h2 {
+            color: #5a1030;
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .letter p {
+            margin-bottom: 0.6rem;
+            color: #3d0f22;
+            line-height: 1.45;
+            text-align: left;
+            font-size: 0.86rem;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 0.6rem;
+        }
+
+        .hint {
+            margin-top: 10px;
+            text-align: center;
+            color: #cdd7ff;
+            font-size: 0.82rem;
+            position: relative;
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🌄 Mini paisaje con árbol lateral -->
+    <div class="landscape">
+        <div class="hill"></div>
+        <div class="side-tree">
+            <div class="side-tree-top"></div>
+            <div class="side-tree-trunk">
+                <span>isa + maca</span>
+            </div>
+        </div>
+        <div class="ground"></div>
+    </div>
+
+    <!-- Corazones / hamburguesas flotando -->
+    <div id="hearts-container"></div>
+
+    <div class="container">
+
+        <div class="minecraft-row">
+            <div class="block" data-letter="M"></div>
+            <div class="block" data-letter="A"></div>
+            <div class="block" data-letter="C"></div>
+            <div class="block" data-letter="A"></div>
+        </div>
+
+        <div class="title">Para vos, mi amor 💙</div>
+        <div class="subtitle">Tocá el sobre para abrir tu cartita.</div>
+
+        <!-- Botón para la canción -->
+        <button class="play-button" onclick="playSong()">
+            💙 Reproducir canción
+        </button>
+
+        <div class="envelope-wrapper" id="wrap">
+            <div class="envelope" id="envelope">
+                <div class="heart"></div>
+
+                <!-- 💌 Carta -->
+                <div class="letter">
+                    <h2>holi mi amor 🫶</h2>
+                    <p>
+                        no le pegaste pero fue tierno ver cómo intentabas adivinar, creo que lo que te quiero decir
+                        ya te lo escribí en mis anteriores cartas pero creo que siempre me encanta recordarte cuánto te amo.
+                    </p>
+                    <p>
+                        porque yo te amo muchísimo, sos el amor de mi vida, todo lo que nunca quise con nadie con vos lo quiero,
+                        quiero que seas vos siempre, quiero que seas mía siempre, y a mí no hay nada que me guste más que ser tuya
+                        y poder amarte.
+                    </p>
+                    <p>
+                        quiero amarte siempre, quiero ser la razón por la que estás feliz y a la que siempre le puedas contar
+                        todas tus cosas, por favor nos casemos y tengamos dos hijos.
+                    </p>
+                    <p>
+                        yo quiero estar para siempre con vos, sos lo que más me hace feliz y mi persona favorita en el mundo,
+                        sos lo más lindo que me pasó ¿sabés?
+                    </p>
+                    <p>
+                        y aunque creo que esta es una de mis peores cartas porque solo te digo lo que ya siempre te digo,
+                        solo quería recordártelo de manera linda porque yo te amo y no hay nada que me guste más en el mundo
+                        que mi amor.
+                    </p>
+                    <p class="signature">
+                        con amor,<br>
+                        isa 🤍
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint">
+            Al tocar el sobre se abre la carta.
+            Si tocás el botón, empieza la canción ✨
+        </div>
+
+    </div>
+
+    <!-- 🎵 Audio local: subí cancion.mp3 al mismo repo/carpeta -->
+    <audio id="song" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <script>
+        const envelopeWrapper = document.getElementById("wrap");
+        const envelope = document.getElementById("envelope");
+        const song = document.getElementById("song");
+
+        envelopeWrapper.onclick = () => {
+            envelope.classList.toggle("open");
+            song.play().catch(() => { });
+        };
+
+        function playSong() {
+            song.play().catch(() => { });
+        }
+
+        // corazones / hamburguesas flotando
+        function createHearts() {
+            const container = document.getElementById("hearts-container");
+            const symbols = ["❤", "🍔", "💙"];
+            for (let i = 0; i < 18; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("heart-floating");
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+                heart.style.fontSize = 12 + Math.random() * 30 + "px";
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }
+        }
+
+        setInterval(createHearts, 1300);
+    </script>
+
+</body>
+</html>
